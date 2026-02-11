@@ -56,6 +56,12 @@ int main(int argc, char** argv) {
         saveAliases(aliases);
     });
 
+    cmdRemove->callback([&]() {
+        aliases.erase(argAlias);
+        saveAliases(aliases);
+    });
+
+
     CLI11_PARSE(app, argc, argv);
     return 0;
 
