@@ -61,6 +61,21 @@ int main(int argc, char** argv) {
         saveAliases(aliases);
     });
 
+    cmdChange->callback([&]() {
+        auto& a = aliases[argAlias];
+
+        if (!argNewAlias.empty()) {
+            aliases[argNewAlias] = a;
+            aliases.erase(argAlias);
+        }
+        if (!argCommand.empty())
+            a.command = argCommand;
+        if (!argDescription.empty())
+            a.description = argDescription;
+
+        saveAliases(aliases);
+    });
+
 
     CLI11_PARSE(app, argc, argv);
     return 0;
