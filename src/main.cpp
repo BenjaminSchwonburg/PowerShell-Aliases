@@ -53,9 +53,9 @@ int main(int argc, char** argv) {
         if (!aliasToRun.empty()) {
             auto it = aliases.find(aliasToRun);
             if (it != aliases.end()) {
-                system(("powershell.exe " + it->second.command).c_str());
-            } else {
-                std::cout << "Alias not found: " << aliasToRun << "\n";
+                std::string fullCommand =
+                "powershell -NoProfile -Command \"" + it->second.command + "\"";
+                system(fullCommand.c_str());
             }
         }
     });
