@@ -27,22 +27,23 @@ int main(int argc, char** argv) {
     bool showCommand;
     bool showDescription;
 
-    app.add_option("run_alias", aliasToRun, "run command of an alias");
+    app.add_option("aliasToRun", aliasToRun, "run command of an alias");
 
-    cmdAdd->add_option("add_alias", argAlias, "name of the command to be created")->required();
+    cmdAdd->add_option("aliasToAdd", argAlias, "name of the alias to be created")->required();
     cmdAdd->add_option("command", argCommand, "command behind the alias")->required();
     cmdAdd->add_option("-d,--description", argDescription, "description for the alias");
 
-    cmdRemove->add_option("remove_alias", argAlias, "name of the command to be removed")->required();
+    cmdRemove->add_option("aliasToRemove", argAlias, "name of the alias to be removed")->required();
 
-    cmdChange->add_option("change_alias", argAlias, "name of the command to be changed")->required();
-    cmdChange->add_option("-a,--alias", argNewAlias, "new alias for the command");
-    cmdChange->add_option("-c,--command", argCommand, "new command for the alias");
-    cmdChange->add_option("-d,--description", argDescription, "new description for the alias");
+    cmdChange->require_option(1);
+    cmdChange->add_option("aliasToChange", argAlias, "name of the command to be changed")->required();
+    cmdChange->add_option("-a,--alias", argNewAlias, "change the name of the alias");
+    cmdChange->add_option("-c,--command", argCommand, "change the command of the alias");
+    cmdChange->add_option("-d,--description", argDescription, "change the description of the alias");
 
-    cmdInspect->add_option("inspect_alias", argAlias, "alias to be inspected")->required();
-    cmdInspect->add_flag("-c,--command", showCommand, "show just command of an alias");
-    cmdInspect->add_flag("-d,--description", showDescription, "show just description of an alias");
+    cmdInspect->add_option("aliasToInspect", argAlias, "alias to be inspected")->required();
+    cmdInspect->add_flag("-c,--command", showCommand, "show just the command of an alias");
+    cmdInspect->add_flag("-d,--description", showDescription, "show just the description of an alias");
 
     std::unordered_map<std::string, Alias> aliases;
 
