@@ -25,20 +25,20 @@ int main(int argc, char** argv) {
     bool showCommand;
     bool showDescription;
 
-    app.add_option("alias", aliasToRun, "run command of an alias");
+    app.add_option("run_alias", aliasToRun, "run command of an alias");
 
-    cmdAdd->add_option("alias", argAlias, "name of the command to be created")->required();
+    cmdAdd->add_option("add_alias", argAlias, "name of the command to be created")->required();
     cmdAdd->add_option("command", argCommand, "command behind the alias")->required();
     cmdAdd->add_option("-d,--description", argDescription, "description for the alias");
 
-    cmdRemove->add_option("alias", argAlias, "name of the command to be removed")->required();
+    cmdRemove->add_option("remove_alias", argAlias, "name of the command to be removed")->required();
 
-    cmdChange->add_option("alias", argAlias, "name of the command to be changed")->required();
+    cmdChange->add_option("change_alias", argAlias, "name of the command to be changed")->required();
     cmdChange->add_option("-a,--alias", argNewAlias, "new alias for the command");
     cmdChange->add_option("-c,--command", argCommand, "new command for the alias");
     cmdChange->add_option("-d,--description", argDescription, "new description for the alias");
 
-    cmdInspect->add_option("alias", argAlias, "alias to be inspected")->required();
+    cmdInspect->add_option("inspect_alias", argAlias, "alias to be inspected")->required();
     cmdInspect->add_flag("-c,--command", showCommand, "show just command of an alias");
     cmdInspect->add_flag("-d,--description", showDescription, "show just description of an alias");
 
@@ -50,7 +50,7 @@ int main(int argc, char** argv) {
         if (!aliasToRun.empty()) {
             auto it = aliases.find(aliasToRun);
             if (it != aliases.end()) {
-                system(it->second.command.c_str());
+                system(("powershell.exe " + it->second.command).c_str());
             } else {
                 std::cout << "Alias not found: " << aliasToRun << "\n";
             }
