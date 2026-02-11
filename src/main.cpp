@@ -72,6 +72,14 @@ int main(int argc, char** argv) {
         handleChange(aliases, argAlias, argNewAlias, argCommand, argDescription);
     });
 
+    cmdList->callback([&]() {
+        handleList(aliases);
+    });
+
+    cmdHelp->callback([&]() {
+        handleHelp();
+    });
+
     cmdVersion->callback([&]() {
         handleVersion(VERSION);
     });

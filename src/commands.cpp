@@ -36,9 +36,15 @@ void handleChange(
 // void handleInspect(const AliasMap& aliases, const std::string& name, bool
 // showCmd, bool showDesc);
 
-// void handleList(const AliasMap& aliases);
+void handleList(const AliasMap& aliases) {
+    for (const auto& a : aliases) {
+        std::cout << a.first << std::endl;
+    }
+}
 
-// void handleHelp();
+void handleHelp() {
+    std::cout << "WIP" << std::endl;
+}
 
 void handleVersion(const std::string& version) {
     std::cout << "PowerShell-Aliases v" << version << std::endl;
