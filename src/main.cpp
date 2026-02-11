@@ -27,6 +27,7 @@ int main(int argc, char** argv) {
     auto cmdList = app.add_subcommand("list", "list all aliases");
     auto cmdHelp = app.add_subcommand("help", "show guide for the tool");
 
+    std::string aliasToRun;
     std::string argAlias;
     std::string argCommand;
     std::string argDescription;
@@ -34,7 +35,7 @@ int main(int argc, char** argv) {
     bool showCommand;
     bool showDescription;
 
-    app.add_option("alias", argAlias, "run command of an alias")->required();
+    app.add_option("alias", aliasToRun, "run command of an alias");
 
     cmdAdd->add_option("alias", argAlias, "name of the command to be created")->required();
     cmdAdd->add_option("command", argCommand, "command behind the alias")->required();
@@ -56,8 +57,16 @@ int main(int argc, char** argv) {
     loadAliases(aliases);
 
     app.callback([&]() {
-        system(aliases[argAlias].command.c_str());
+        if (!aliasToRun.empty()) {
+            auto it = aliases.find(aliasToRun);
+            if (it != aliases.end()) {
+                system(it->second.command.c_str());
+            } else {
+                std::cout << "Alias not found: " << aliasToRun << "\n";
+            }
+        }
     });
+
 
     cmdAdd->callback([&]() {
         aliases[argAlias] = {argCommand, argDescription};
