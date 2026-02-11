@@ -72,6 +72,10 @@ int main(int argc, char** argv) {
         handleChange(aliases, argAlias, argNewAlias, argCommand, argDescription);
     });
 
+    cmdInspect->callback([&]() {
+        handleInspect(aliases, argAlias, showCommand, showDescription);
+    });
+
     cmdList->callback([&]() {
         handleList(aliases);
     });
