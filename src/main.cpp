@@ -12,7 +12,7 @@ int main(int argc, char** argv) {
 
     app.require_subcommand(0,1);
 
-    auto cmdAdd = app.add_subcommand("add", "Add a new alias");
+    auto cmdAdd = app.add_subcommand("add", "add a new alias");
     auto cmdRemove = app.add_subcommand("remove", "remove an alias");
     auto cmdChange = app.add_subcommand("change", "change the name, command or description of an alias");
     auto cmdInspect = app.add_subcommand("inspect", "inspect the command behind an alias");
