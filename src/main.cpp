@@ -1,20 +1,31 @@
 #include "CLI11.hpp"
-#include <iostream>
+#include "json.hpp"
 #include <string>
+#include <fstream>
+
+using json = nlohmann::json;
+
+struct Alias {
+    std::string command;
+    std::string description;
+};
+
+void saveAliases(const std::unordered_map<std::string, Alias>& aliases);
+void loadAliases(std::unordered_map<std::string, Alias>& aliases);
 
 int main(int argc, char** argv) {
 
     CLI::App app{"PowerShell-Aliases"};
     argv = app.ensure_utf8(argv);
 
-    app.require_subcommand();
+    app.require_subcommand(0,1);
 
     auto cmdAdd = app.add_subcommand("add", "Add a new alias");
     auto cmdRemove = app.add_subcommand("remove", "remove an alias");
     auto cmdChange = app.add_subcommand("change", "change the alias, command or description of an alias");
     auto cmdInspect = app.add_subcommand("inspect", "inspect the command behind an alias");
     auto cmdList = app.add_subcommand("list", "list all aliases");
-    auto cmdHelp = app.add_subcommand("help", "command to show help");
+    auto cmdHelp = app.add_subcommand("help", "show guide for the tool");
 
     std::string argAlias;
     std::string argCommand;
@@ -33,16 +44,46 @@ int main(int argc, char** argv) {
     cmdChange->add_option("-d,--description", argDescription, "new description for the alias");
 
     cmdInspect->add_option("alias", argAlias, "alias to be inspected")->required();
-    cmdInspect->add_option("-c,--command", argCommand, "show just command of an alias");
-    cmdInspect->add_option("-d,--description", argDescription, "show just description of an alias");
+    cmdInspect->add_flag("-c,--command", argCommand, "show just command of an alias");
+    cmdInspect->add_flag("-d,--description", argDescription, "show just description of an alias");
 
+    std::unordered_map<std::string, Alias> aliases;
 
-    /*
-    std::string filename = "default";
-    app.add_option("-f,--file", filename, "A help string");
-    */
+    loadAliases(aliases);
 
     CLI11_PARSE(app, argc, argv);
     return 0;
 
+}
+
+void saveAliases(const std::unordered_map<std::string, Alias>& aliases) {
+    json j;
+
+    for (const auto& [name, alias] : aliases) {
+        j[name] = {
+            {"command", alias.command},
+            {"description", alias.description}
+        };
+    }
+
+    std::ofstream file("aliases.json");
+    file << j.dump(4);
+}
+
+
+void loadAliases(std::unordered_map<std::string, Alias>& aliases) {
+    std::ifstream file("aliases.json");
+
+    if (!file.is_open())
+        return;
+
+    json j;
+    file >> j;
+
+    for (auto& [name, value] : j.items()) {
+        aliases[name] = {
+            value["command"].get<std::string>(),
+            value.value("description", "")
+        };
+    }
 }
