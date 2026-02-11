@@ -9,5 +9,5 @@ struct Alias {
 
 using AliasMap = std::unordered_map<std::string, Alias>;
 
-void loadAliases(AliasMap& aliases, const std::string& filename="aliases.json");
-void saveAliases(const AliasMap& aliases, const std::string& filename="aliases.json");
+void loadAliases(AliasMap& aliases);
+void saveAliases(const AliasMap& aliases);
