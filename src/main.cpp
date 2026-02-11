@@ -31,6 +31,10 @@ int main(int argc, char** argv) {
     std::string argCommand;
     std::string argDescription;
     std::string argNewAlias;
+    bool showCommand;
+    bool showDescription;
+
+    app.add_option("alias", argAlias, "run command of an alias")->required();
 
     cmdAdd->add_option("alias", argAlias, "name of the command to be created")->required();
     cmdAdd->add_option("command", argCommand, "command behind the alias")->required();
@@ -44,12 +48,16 @@ int main(int argc, char** argv) {
     cmdChange->add_option("-d,--description", argDescription, "new description for the alias");
 
     cmdInspect->add_option("alias", argAlias, "alias to be inspected")->required();
-    cmdInspect->add_flag("-c,--command", argCommand, "show just command of an alias");
-    cmdInspect->add_flag("-d,--description", argDescription, "show just description of an alias");
+    cmdInspect->add_flag("-c,--command", showCommand, "show just command of an alias");
+    cmdInspect->add_flag("-d,--description", showDescription, "show just description of an alias");
 
     std::unordered_map<std::string, Alias> aliases;
 
     loadAliases(aliases);
+
+    app.callback([&]() {
+        system(aliases[argAlias].command.c_str());
+    });
 
     cmdAdd->callback([&]() {
         aliases[argAlias] = {argCommand, argDescription};
