@@ -7,7 +7,7 @@ int main(int argc, char** argv) {
 
     const std::string VERSION = "1.0.0";
 
-    CLI::App app{"PowerShell-Aliases"};
+    CLI::App app{"PowerShell-Aliases v" + VERSION};
     argv = app.ensure_utf8(argv);
 
     app.require_subcommand(0,1);
@@ -35,7 +35,7 @@ int main(int argc, char** argv) {
 
     cmdRemove->add_option("aliasToRemove", argAlias, "name of the alias to be removed")->required();
 
-    cmdChange->require_option(1);
+    cmdChange->require_option(2);
     cmdChange->add_option("aliasToChange", argAlias, "name of the command to be changed")->required();
     cmdChange->add_option("-a,--alias", argNewAlias, "change the name of the alias");
     cmdChange->add_option("-c,--command", argCommand, "change the command of the alias");
