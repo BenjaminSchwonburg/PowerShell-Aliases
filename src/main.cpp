@@ -27,7 +27,7 @@ int main(int argc, char** argv) {
     bool showCommand;
     bool showDescription;
 
-    app.add_option("aliasToRun", aliasToRun, "run command of an alias");
+    app.add_option("aliasToRun", aliasToRun, "runs the command behind an alias");
 
     cmdAdd->add_option("aliasToAdd", argAlias, "name of the alias to be created")->required();
     cmdAdd->add_option("command", argCommand, "command behind the alias")->required();
