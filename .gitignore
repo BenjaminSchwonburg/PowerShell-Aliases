@@ -6,6 +6,6 @@
 /cmake_install.cmake
 /Makefile
 /.clangd
-/.clang_format
+/.clang-format
 /.gitignore
 /configure.bat
