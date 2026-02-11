@@ -50,12 +50,19 @@ int main(int argc, char** argv) {
     loadAliases(aliases);
 
     app.callback([&]() {
+        if (aliasToRun.empty() && app.get_subcommands().empty()) {
+            std::cout << app.help() << "\n";
+            exit(0);
+        }
+
         if (!aliasToRun.empty()) {
             auto it = aliases.find(aliasToRun);
             if (it != aliases.end()) {
                 std::string fullCommand =
-                "powershell -NoProfile -Command \"" + it->second.command + "\"";
+                    "powershell -NoProfile -Command \"" + it->second.command + "\"";
                 system(fullCommand.c_str());
+            } else {
+                std::cout << "Alias not found: " << aliasToRun << "\n";
             }
         }
     });
