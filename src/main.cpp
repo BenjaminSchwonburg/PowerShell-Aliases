@@ -1,6 +1,15 @@
+#include "CLI11.hpp"
 #include <iostream>
 
-int main() {
-    std::cout << "Sybau World" << std::endl;
+int main(int argc, char** argv) {
+
+    CLI::App app{"PowerShell-Aliases"};
+    argv = app.ensure_utf8(argv);
+
+    std::string filename = "default";
+    app.add_option("-f,--file", filename, "A help string");
+
+    CLI11_PARSE(app, argc, argv);
     return 0;
+
 }
