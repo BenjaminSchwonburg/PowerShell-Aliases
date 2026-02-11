@@ -5,6 +5,8 @@
 
 int main(int argc, char** argv) {
 
+    const std::string VERSION = "1.0.0";
+
     CLI::App app{"PowerShell-Aliases"};
     argv = app.ensure_utf8(argv);
 
@@ -16,6 +18,7 @@ int main(int argc, char** argv) {
     auto cmdInspect = app.add_subcommand("inspect", "inspect the command behind an alias");
     auto cmdList = app.add_subcommand("list", "list all aliases");
     auto cmdHelp = app.add_subcommand("help", "show guide for the tool");
+    auto cmdVersion = app.add_subcommand("version", "show the version of PowerShell-Aliases");
 
     std::string aliasToRun;
     std::string argAlias;
@@ -69,6 +72,9 @@ int main(int argc, char** argv) {
         handleChange(aliases, argAlias, argNewAlias, argCommand, argDescription);
     });
 
+    cmdVersion->callback([&]() {
+        handleVersion(VERSION);
+    });
 
     CLI11_PARSE(app, argc, argv);
     return 0;

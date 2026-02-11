@@ -1,5 +1,6 @@
 #include "commands.hpp"
 #include "alias_manager.hpp"
+#include <iostream>
 
 void handleAdd(
     AliasMap &aliases, const std::string &name, const std::string &cmd,
@@ -38,3 +39,7 @@ void handleChange(
 // void handleList(const AliasMap& aliases);
 
 // void handleHelp();
+
+void handleVersion(const std::string& version) {
+    std::cout << "PowerShell-Aliases v" << version << std::endl;
+}
