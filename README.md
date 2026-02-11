@@ -1,44 +1,20 @@
-# PowerShellAliases
-
-This is the PowerShellAliases project.
-
-# Building and installing
-
-See the [BUILDING](BUILDING.md) document.
-
-# Contributing
-
-See the [CONTRIBUTING](CONTRIBUTING.md) document.
-
-# Licensing
-
-<!--
-Please go to https://choosealicense.com/licenses/ and choose a license that
-fits your needs. The recommended license for a project of this type is the
-GNU AGPLv3.
--->
-
 # Powershell Aliases
 Powershell Aliases is a tool to create aliases for commands in Powershell
 
 ## Installation
-TODO
+WIP
+- Download the psal executable (psal.exe)
+- put it in a folder like C:\Users\<user>\AppData\Local\PowerShell-Aliases\
+- create a system environment variable for the current user in PATH containing the path to the executable
 
 ## Usage
-Run a command with an alias
-psal <alias-command>
+WIP
+psal add                         add a new alias
+psal remove                      remove an alias
+psal change                      change the name, command or description of an alias
+psal inspect                     inspect the command behind an alias
+psal list                        list all aliases
+psal version                     show the version of PowerShell-Aliases
 
-Add a new alias
-psal add <alias> <command>
-
-Remove an alias
-psal remove <alias-command>
-
-Change the command of an alias
-psal change <alias-command> <command>
-
-Inspect the command behind an alias
-psal inspect <alias-command>
-
-List all aliases
-psal list
+## Licensing
+see LICENSE
