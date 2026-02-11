@@ -1,0 +1,9 @@
+/build/
+/CMakeFiles/
+/compile_commands.json
+/*.exe
+/CMakeCache.txt
+/cmake_install.cmake
+/Makefile
+/.clangd
+/configure.bat
