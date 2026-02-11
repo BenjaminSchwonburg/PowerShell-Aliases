@@ -51,6 +51,11 @@ int main(int argc, char** argv) {
 
     loadAliases(aliases);
 
+    cmdAdd->callback([&]() {
+        aliases[argAlias] = {argCommand, argDescription};
+        saveAliases(aliases);
+    });
+
     CLI11_PARSE(app, argc, argv);
     return 0;
 
