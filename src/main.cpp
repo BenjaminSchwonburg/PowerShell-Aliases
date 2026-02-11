@@ -1,17 +1,7 @@
 #include "CLI11.hpp"
-#include "json.hpp"
+#include "alias_manager.hpp"
+#include "commands.hpp"
 #include <string>
-#include <fstream>
-
-using json = nlohmann::json;
-
-struct Alias {
-    std::string command;
-    std::string description;
-};
-
-void saveAliases(const std::unordered_map<std::string, Alias>& aliases);
-void loadAliases(std::unordered_map<std::string, Alias>& aliases);
 
 int main(int argc, char** argv) {
 
@@ -67,66 +57,20 @@ int main(int argc, char** argv) {
         }
     });
 
-
     cmdAdd->callback([&]() {
-        aliases[argAlias] = {argCommand, argDescription};
-        saveAliases(aliases);
+        handleAdd(aliases, argAlias, argCommand, argDescription);
     });
 
     cmdRemove->callback([&]() {
-        aliases.erase(argAlias);
-        saveAliases(aliases);
+        handleRemove(aliases, argAlias);
     });
 
     cmdChange->callback([&]() {
-        auto& a = aliases[argAlias];
-
-        if (!argNewAlias.empty()) {
-            aliases[argNewAlias] = a;
-            aliases.erase(argAlias);
-        }
-        if (!argCommand.empty())
-            a.command = argCommand;
-        if (!argDescription.empty())
-            a.description = argDescription;
-
-        saveAliases(aliases);
+        handleChange(aliases, argAlias, argNewAlias, argCommand, argDescription);
     });
 
 
     CLI11_PARSE(app, argc, argv);
     return 0;
 
-}
-
-void saveAliases(const std::unordered_map<std::string, Alias>& aliases) {
-    json j;
-
-    for (const auto& [name, alias] : aliases) {
-        j[name] = {
-            {"command", alias.command},
-            {"description", alias.description}
-        };
-    }
-
-    std::ofstream file("aliases.json");
-    file << j.dump(4);
-}
-
-
-void loadAliases(std::unordered_map<std::string, Alias>& aliases) {
-    std::ifstream file("aliases.json");
-
-    if (!file.is_open())
-        return;
-
-    json j;
-    file >> j;
-
-    for (auto& [name, value] : j.items()) {
-        aliases[name] = {
-            value["command"].get<std::string>(),
-            value.value("description", "")
-        };
-    }
 }
