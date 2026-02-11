@@ -9,5 +9,4 @@ void handleChange(AliasMap& aliases, const std::string& oldName,
                   const std::string& newName, const std::string& cmd, const std::string& desc);
 void handleInspect(const AliasMap& aliases, const std::string& name, bool showCmd, bool showDesc);
 void handleList(const AliasMap& aliases);
-void handleHelp();
 void handleVersion(const std::string& version);

@@ -17,7 +17,6 @@ int main(int argc, char** argv) {
     auto cmdChange = app.add_subcommand("change", "change the alias, command or description of an alias");
     auto cmdInspect = app.add_subcommand("inspect", "inspect the command behind an alias");
     auto cmdList = app.add_subcommand("list", "list all aliases");
-    auto cmdHelp = app.add_subcommand("help", "show guide for the tool");
     auto cmdVersion = app.add_subcommand("version", "show the version of PowerShell-Aliases");
 
     std::string aliasToRun;
@@ -78,10 +77,6 @@ int main(int argc, char** argv) {
 
     cmdList->callback([&]() {
         handleList(aliases);
-    });
-
-    cmdHelp->callback([&]() {
-        handleHelp();
     });
 
     cmdVersion->callback([&]() {

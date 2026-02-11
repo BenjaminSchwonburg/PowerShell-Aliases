@@ -52,10 +52,6 @@ void handleList(const AliasMap& aliases) {
     }
 }
 
-void handleHelp() {
-    std::cout << "WIP" << std::endl;
-}
-
 void handleVersion(const std::string& version) {
     std::cout << "PowerShell-Aliases v" << version << std::endl;
 }
